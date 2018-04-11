@@ -24,6 +24,9 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
+LAVENDER = (195, 141, 239)
+PINK = (255, 186, 233)
+PURPLE = (99, 45, 226)
 
 # Images
 
@@ -46,22 +49,34 @@ class Ship:
         self.x += self.speed
 
     def shoot(self):
-        print("Pew!")
+        x = self.x + self.w / 2 - 2
+        y = self.y
+        laser = Laser(x, y)
+        lasers.append(laser)
+        print("POOM!")
 
     def update(self):
         pass
 
     def draw(self):
         rect = [self.x, self.y, self.w, self.h]
-        pygame.draw.rect(screen, RED, rect)
+        pygame.draw.rect(screen, PINK, rect)
     
 class Laser:
-    
-    def __init__(self):
-        pass
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y - 10
+        self.w = 4
+        self.h = 22
+        self.speed = 5      
 
     def update(self):
-        pass
+        self.y -= self.speed
+
+    def draw(self):
+        rect = [self.x, self.y, self.w, self.h]
+        pygame.draw.rect(screen, PURPLE, rect)
 
     
 class Mob:
@@ -93,6 +108,7 @@ class Fleet:
     
 # Make game objects
 player = Ship(384, 536)
+lasers = []
 
 # Game loop
 done = False
@@ -115,13 +131,15 @@ while not done:
         
     
     # Game logic (Check for collisions, update points, etc.)
-    
+    for l in lasers:
+        l.update()
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
     screen.fill(BLACK)
     player.draw()
-
+    for l in lasers:
+        l.draw()
 
     
     # Update screen (Actually draw the picture in the window.)
