@@ -30,15 +30,19 @@ PURPLE = (99, 45, 226)
 
 # Images
 
+ship_img = pygame.image.load('images/player_ship.png')
+laser_img = pygame.image.load('images/miku_bullets.png')
 
 
 # Game classes
-class Ship:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.w = 32
-        self.h = 32
+class Ship(pygame.sprite.Sprite):
+    def __init__(self, x, y, image):
+        super().__init__()
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
         self.speed = 3
         self.shield = 10
 
@@ -49,34 +53,27 @@ class Ship:
         self.x += self.speed
 
     def shoot(self):
-        x = self.x + self.w / 2 - 2
-        y = self.y
-        laser = Laser(x, y)
-        lasers.append(laser)
+        laser = Laser(laser_img)
+        laser.rect.centerx = self.rect.centerx
+        laser.rect.centery = self.rect.top
+        lasers.add(laser)
         print("POOM!")
 
     def update(self):
         pass
 
-    def draw(self):
-        rect = [self.x, self.y, self.w, self.h]
-        pygame.draw.rect(screen, PINK, rect)
-    
-class Laser:
+class Laser(pygame.sprite.Sprite):
 
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y - 10
-        self.w = 4
-        self.h = 22
+    def __init__(self, image):
+        super().__init__()
+        
+        self.image = image
+        self.rect = self.image.get_rect()
+
         self.speed = 5      
 
     def update(self):
         self.y -= self.speed
-
-    def draw(self):
-        rect = [self.x, self.y, self.w, self.h]
-        pygame.draw.rect(screen, PURPLE, rect)
 
     
 class Mob:
