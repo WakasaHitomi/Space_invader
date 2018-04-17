@@ -9,7 +9,7 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 600
 SIZE = (WIDTH, HEIGHT)
-TITLE = "Space War"
+TITLE = "Neko War"
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
 
@@ -35,6 +35,9 @@ laser_img = pygame.image.load('images/miku_bullets.png')
 mob_img = pygame.image.load('images/squid.png')
 
 
+# Sounds
+EXPLOSION = pygame.mixer.Sound('sounds/explosion.ogg')
+
 # Game classes
 class Ship(pygame.sprite.Sprite):
     def __init__(self, x, y, image):
@@ -45,7 +48,7 @@ class Ship(pygame.sprite.Sprite):
         self.rect.y = y
 
         self.speed = 3
-        self.shield = 10
+        self.shield = 5
 
     def move_left(self):
         self.x -= self.speed
@@ -60,8 +63,16 @@ class Ship(pygame.sprite.Sprite):
         lasers.add(laser)
         print("POOM!")
 
-    def update(self):
-        pass
+    def update(self, bombs):
+        hit_list = pygame.sprite.spritecollide(self, bombs, True)
+
+        for hit in hit_list:
+            # play hit sound
+            self.shield -= 1
+
+        if self.shield == 0:
+            EXPLOSION.play()
+            self.kill()
 
 class Laser(pygame.sprite.Sprite):
 
@@ -88,7 +99,10 @@ class Mob(pygame.sprite.Sprite):
         self.rect.y = y
 
     def drop_bomb(self):
-        pass
+        bomb = Bomb(bomb_img)
+        bomb.rect.centerx = self.rect.centerx
+        bomb.rect.centery = self.rect.bottom
+        bombs.add(bomb)
 
     def update(self, laser):
         hit_list = pygame.sprite.spritecollide(self, lasers, True)
@@ -100,21 +114,63 @@ class Mob(pygame.sprite.Sprite):
 
 
 class Bomb:
+(pygame.sprite.Sprite):
     
-    def __init__(self):
-        pass
+    def __init__(self, image):
+        super().__init__()
+
+        self.image = image
+        self.rect = self.image.get_rect()
+        
+        self.speed = 3
 
     def update(self):
-        pass
-    
-    
+        self.rect.y += self.speed
+
+        
 class Fleet:
 
-    def __init__(self):
-        pass
+    def __init__(self, mobs):
+        self.mobs = mobs
+        self.moving_right = True
+        self.speed = 5
+        self.bomb_rate = 60
 
+    def move(self):
+        reverse = False
+        
+        for m in mobs:
+            if self.moving_right:
+                m.rect.x += self.speed
+                if m.rect.right >= WIDTH:
+                    reverse = True
+            else:
+                m.rect.x -= self.speed
+                if m.rect.left <=0:
+                    reverse = True
+
+        if reverse == True:
+            self.moving_right = not self.moving_right
+            for m in mobs:
+                m.rect.y += 32
+            
+
+    def choose_bomber(self):
+        rand = random.randrange(0, self.bomb_rate)
+        all_mobs = mobs.sprites()
+        
+        if len(all_mobs) > 0 and rand == 0:
+            return random.choice(all_mobs)
+        else:
+            return None
+    
     def update(self):
-        pass
+        self.move()
+
+        bomber = self.choose_bomber()
+        if bomber != None:
+            bomber.drop_bomb()
+
 
     
 # Make game objects
@@ -155,15 +211,19 @@ while not done:
         
     
     # Game logic (Check for collisions, update points, etc.)
-    player.update()
+    player.update(bombs)
     lasers.update()   
+    mobs.update(lasers)
+    bombs.update()
+    fleet.update()
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
     screen.fill(BLACK)
     lasers.draw(screen)
     player.draw(screen)
-
+    bombs.draw(screen)
+    mobs.draw(screen)
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
