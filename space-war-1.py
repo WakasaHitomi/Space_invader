@@ -1,5 +1,6 @@
 # Imports
 import pygame
+import random
 
 # Initialize game engine
 pygame.init()
@@ -33,15 +34,17 @@ PURPLE = (99, 45, 226)
 ship_img = pygame.image.load('images/player_ship.png')
 laser_img = pygame.image.load('images/miku_bullets.png')
 mob_img = pygame.image.load('images/squid.png')
+bomb_img = pygame.image.load('images/tenticle.
 
 
 # Sounds
-EXPLOSION = pygame.mixer.Sound('sounds/explosion.ogg')
+'''EXPLOSION = pygame.mixer.Sound('sounds/explosion.ogg')'''
 
 # Game classes
 class Ship(pygame.sprite.Sprite):
     def __init__(self, x, y, image):
         super().__init__()
+        
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -70,6 +73,8 @@ class Ship(pygame.sprite.Sprite):
             # play hit sound
             self.shield -= 1
 
+        hit_list = pygame.sprite.spritecollide(self, mobs, False)
+
         if self.shield == 0:
             EXPLOSION.play()
             self.kill()
@@ -87,16 +92,21 @@ class Laser(pygame.sprite.Sprite):
     def update(self):
         self.y -= self.speed
 
+        if self.rect.bottom < 0:
+            self.kill()
+
     
 class Mob(pygame.sprite.Sprite):
-
     def __init__(self, x, y, image):
         super().__init__()
 
         self.image = image
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+
 
     def drop_bomb(self):
         bomb = Bomb(bomb_img)
@@ -105,7 +115,7 @@ class Mob(pygame.sprite.Sprite):
         bombs.add(bomb)
 
     def update(self, laser):
-        hit_list = pygame.sprite.spritecollide(self, lasers, True)
+        hit_list = pygame.sprite.spritecollide(self, lasers, True, pygame.sprite.collide_mask)
 
         if len(hit_list) > 0:
             EXPLOSION.play()
@@ -113,8 +123,7 @@ class Mob(pygame.sprite.Sprite):
             
 
 
-class Bomb:
-(pygame.sprite.Sprite):
+class Bomb(pygame.sprite.Sprite):
     
     def __init__(self, image):
         super().__init__()
@@ -183,12 +192,20 @@ mob3 = Mob(128, 64, mob_img)
 
 # Make sprite groups
 player = pygame.sprite.GroupSingle()
-player.add(Ship)
+player.add(ship)
 
 lasers = pygame.sprite.Group()
 
 mobs = pygame.sprite.GroupSingle()
 mobs.add(mob1, mob2, mob3)
+
+bombs = pygame.sprite.Group()
+
+
+
+fleet = Fleet(mobs)
+
+
 
 # Game loop
 done = False
