@@ -32,7 +32,7 @@ PURPLE = (99, 45, 226)
 # Images
 
 ship_img = pygame.image.load('images/player_ship-1.png')
-laser_img = pygame.image.load('images/miku_bullets.png')
+laser_img = pygame.image.load('images/miku_bullets-1.png')
 mob_img = pygame.image.load('images/squid-1.png')
 bomb_img = pygame.image.load('images/tenticle-1.png')
 
