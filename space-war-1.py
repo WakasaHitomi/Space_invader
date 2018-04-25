@@ -65,7 +65,6 @@ class Ship(pygame.sprite.Sprite):
         laser.rect.centerx = self.rect.centerx
         laser.rect.centery = self.rect.top
         lasers.add(laser)
-        print("POOM!")
 
     def update(self, bombs):
         hit_list = pygame.sprite.spritecollide(self, bombs, True,pygame.sprite.collide_mask)
@@ -77,7 +76,7 @@ class Ship(pygame.sprite.Sprite):
         hit_list = pygame.sprite.spritecollide(self, mobs, False)
 
         if len(hit_list) > 0:
-            self.shield
+            self.shield = 0
 
         if self.shield == 0:
             '''EXPLOSION.play()'''
@@ -190,8 +189,8 @@ class Fleet:
 
 ship = Ship(384, 536, ship_img)
 mob1 = Mob(128, 64, mob_img)
-mob2 = Mob(128, 64, mob_img)
-mob3 = Mob(128, 64, mob_img)
+mob2 = Mob(228, 64, mob_img)
+mob3 = Mob(328, 64, mob_img)
 
 
 # Make sprite groups
@@ -221,7 +220,7 @@ while not done:
             done = True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                player.shoot()
+                ship.shoot()
 
     pressed = pygame.key.get_pressed()
 
