@@ -7,8 +7,8 @@ pygame.init()
 
 
 # Window
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 1000
+HEIGHT = 800
 SIZE = (WIDTH, HEIGHT)
 TITLE = "Neko War"
 screen = pygame.display.set_mode(SIZE)
@@ -31,10 +31,11 @@ PURPLE = (99, 45, 226)
 
 # Images
 
-ship_img = pygame.image.load('images/player_ship.png')
+ship_img = pygame.image.load('images/player_ship-1.png')
 laser_img = pygame.image.load('images/miku_bullets.png')
-mob_img = pygame.image.load('images/squid.png')
-bomb_img = pygame.image.load('images/tenticle.
+mob_img = pygame.image.load('images/squid-1.png')
+bomb_img = pygame.image.load('images/tenticle-1.png')
+
 
 
 # Sounds
@@ -54,10 +55,10 @@ class Ship(pygame.sprite.Sprite):
         self.shield = 5
 
     def move_left(self):
-        self.x -= self.speed
+        self.rect.x -= self.speed
         
     def move_right(self):
-        self.x += self.speed
+        self.rect.x += self.speed
 
     def shoot(self):
         laser = Laser(laser_img)
@@ -67,7 +68,7 @@ class Ship(pygame.sprite.Sprite):
         print("POOM!")
 
     def update(self, bombs):
-        hit_list = pygame.sprite.spritecollide(self, bombs, True)
+        hit_list = pygame.sprite.spritecollide(self, bombs, True,pygame.sprite.collide_mask)
 
         for hit in hit_list:
             # play hit sound
@@ -75,8 +76,11 @@ class Ship(pygame.sprite.Sprite):
 
         hit_list = pygame.sprite.spritecollide(self, mobs, False)
 
+        if len(hit_list) > 0:
+            self.shield
+
         if self.shield == 0:
-            EXPLOSION.play()
+            '''EXPLOSION.play()'''
             self.kill()
 
 class Laser(pygame.sprite.Sprite):
@@ -118,7 +122,7 @@ class Mob(pygame.sprite.Sprite):
         hit_list = pygame.sprite.spritecollide(self, lasers, True, pygame.sprite.collide_mask)
 
         if len(hit_list) > 0:
-            EXPLOSION.play()
+            '''EXPLOSION.play()'''
             self.kill()
             
 
@@ -222,11 +226,18 @@ while not done:
     pressed = pygame.key.get_pressed()
 
     if pressed[pygame.K_LEFT]:
-        player.move_left()
+        ship.move_left()
     elif pressed[pygame.K_RIGHT]:
-        player.move_right()
-        
+        ship.move_right()
+
     
+    closed = pressed[pygame.K_x]
+
+    if closed:
+        exit()
+        
+
+
     # Game logic (Check for collisions, update points, etc.)
     player.update(bombs)
     lasers.update()   
