@@ -56,6 +56,9 @@ class Ship(pygame.sprite.Sprite):
 
     def move_left(self):
         self.rect.x -= self.speed
+
+     #   if self.rect.left >= 0:
+                    self.rect.x <= 0
         
     def move_right(self):
         self.rect.x += self.speed
@@ -67,7 +70,7 @@ class Ship(pygame.sprite.Sprite):
         lasers.add(laser)
 
     def update(self, bombs):
-        hit_list = pygame.sprite.spritecollide(self, bombs, True,pygame.sprite.collide_mask)
+        hit_list = pygame.sprite.spritecollide(self, bombs, True, pygame.sprite.collide_mask)
 
         for hit in hit_list:
             # play hit sound
@@ -93,7 +96,7 @@ class Laser(pygame.sprite.Sprite):
         self.speed = 5      
 
     def update(self):
-        self.y -= self.speed
+        self.rect.y -= self.speed
 
         if self.rect.bottom < 0:
             self.kill()
