@@ -33,7 +33,7 @@ PURPLE = (99, 45, 226)
 FONT_SM = pygame.font.Font(None, 24)
 FONT_MD = pygame.font.Font(None, 32)
 FONT_LG = pygame.font.Font(None, 64)
-FONT_XL = pygame.font.Font(None, 96)
+FONT_XL = pygame.font.Font('images/teenage_fantasy_romance_novel/TEENAGEROMANCENOVEL.ttf', 96)
 
 # Images
 
@@ -76,6 +76,8 @@ class Ship(pygame.sprite.Sprite):
 
 
     def shoot(self):
+
+
         laser = Laser(laser_img)
         laser.rect.centerx = self.rect.centerx
         laser.rect.centery = self.rect.top
@@ -150,7 +152,7 @@ class Bomb(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect()
         
-        self.speed = 3
+        self.speed = 5
 
     def update(self):
         self.rect.y += self.speed
@@ -161,7 +163,7 @@ class Fleet:
     def __init__(self, mobs):
         self.mobs = mobs
         self.moving_right = True
-        self.speed = 5
+        self.speed = 3
         self.bomb_rate = 60
 
     def move(self):
@@ -207,6 +209,9 @@ ship = Ship(384, 536, ship_img)
 mob1 = Mob(128, 64, mob_img)
 mob2 = Mob(228, 64, mob_img)
 mob3 = Mob(328, 64, mob_img)
+mob4 = Mob(428, 64, mob_img)
+mob5 = Mob(528, 64, mob_img)
+
 
 
 # Make sprite groups
@@ -216,8 +221,8 @@ player.score = 0
 
 lasers = pygame.sprite.Group()
 
-mobs = pygame.sprite.GroupSingle()
-mobs.add(mob1, mob2, mob3)
+mobs = pygame.sprite.Group()
+mobs.add(mob1, mob2, mob3, mob4, mob5)
 
 bombs = pygame.sprite.Group()
 
@@ -231,7 +236,7 @@ stage = START
 
 #Game Helper functions
 def show_title_screen():
-    title_text = Font_XL.render("Neko War!!!", 1, WHITE)
+    title_text = FONT_XL.render("Neko War!!!", 1, WHITE)
     screen.blit(title_text, [128, 204])
 
 def show_stats(player):
@@ -264,10 +269,10 @@ while not done:
 
 
     
-    closed = pressed[pygame.K_x]
+        closed = pressed[pygame.K_x]
 
-    if closed:
-        exit()
+        if closed:
+            exit()
         
 
 
