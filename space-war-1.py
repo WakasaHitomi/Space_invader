@@ -45,7 +45,11 @@ bomb_img = pygame.image.load('images/tenticle-1.png')
 
 
 # Sounds
-'''EXPLOSION = pygame.mixer.Sound('sounds/explosion.ogg')'''
+EXPLOSION = pygame.mixer.Sound('images/explosion.ogg')
+ZAP = pygame.mixer.Sound('images/player-zap.ogg')
+EW = pygame.mixer.Sound('images/squish.ogg')
+SPLAT = pygame.mixer.Sound('images/splat.ogg')
+
 
 
 # Stages
@@ -82,12 +86,13 @@ class Ship(pygame.sprite.Sprite):
         laser.rect.centerx = self.rect.centerx
         laser.rect.centery = self.rect.top
         lasers.add(laser)
+        ZAP.play()
 
     def update(self, bombs):
         hit_list = pygame.sprite.spritecollide(self, bombs, True, pygame.sprite.collide_mask)
 
         for hit in hit_list:
-            # play hit sound
+            SPLAT.play()
             self.shield -= 1
 
         hit_list = pygame.sprite.spritecollide(self, mobs, False)
@@ -96,7 +101,7 @@ class Ship(pygame.sprite.Sprite):
             self.shield = 0
 
         if self.shield == 0:
-            '''EXPLOSION.play()'''
+            EXPLOSION.play()
             self.kill()
 
 class Laser(pygame.sprite.Sprite):
@@ -133,12 +138,13 @@ class Mob(pygame.sprite.Sprite):
         bomb.rect.centerx = self.rect.centerx
         bomb.rect.centery = self.rect.bottom
         bombs.add(bomb)
+        EW.play()
 
     def update(self, laser, player):
         hit_list = pygame.sprite.spritecollide(self, lasers, True, pygame.sprite.collide_mask)
 
         if len(hit_list) > 0:
-            '''EXPLOSION.play()'''
+            EXPLOSION.play()
             player.score += 150
             self.kill()
             
