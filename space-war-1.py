@@ -41,6 +41,7 @@ ship_img = pygame.image.load('images/player_ship-1.png')
 laser_img = pygame.image.load('images/miku_bullets-1.png')
 mob_img = pygame.image.load('images/squid-1.png')
 bomb_img = pygame.image.load('images/tenticle-1.png')
+mob2_img = pygame.image.load('images/octo-1.png')
 
 
 
@@ -208,15 +209,71 @@ class Fleet:
             bomber.drop_bomb()
 
 
+
+
+
+
+class Fleet2:
+
+    def __init__(self, mobs):
+        self.mobs = mobs
+        self.moving_right = True
+        self.speed = 3
+        self.bomb_rate = 60
+
+    def move(self):
+        reverse = False
+        
+        for m in mobs:
+            if self.moving_right:
+                m.rect.x += self.speed
+                if m.rect.right >= WIDTH:
+                    reverse = True
+            else:
+                m.rect.x -= self.speed
+                if m.rect.left <=0:
+                    reverse = True
+
+        if reverse == True:
+            self.moving_right = not self.moving_right
+            for m in mobs:
+                m.rect.y += 32
+            
+
+    def choose_bomber(self):
+        rand = random.randrange(0, self.bomb_rate)
+        all_mobs = mobs.sprites()
+        
+        if len(all_mobs) > 0 and rand == 0:
+            return random.choice(all_mobs)
+        else:
+            return None
+    
+    def update(self):
+        self.move()
+
+        bomber = self.choose_bomber()
+        if bomber != None:
+            bomber.drop_bomb()
+
     
 # Make game objects
 
 ship = Ship(384, 536, ship_img)
+
 mob1 = Mob(128, 64, mob_img)
 mob2 = Mob(228, 64, mob_img)
 mob3 = Mob(328, 64, mob_img)
 mob4 = Mob(428, 64, mob_img)
 mob5 = Mob(528, 64, mob_img)
+
+mob20 = Mob(128, -100, mob2_img)
+mob21 = Mob(228, -100, mob2_img)
+mob22 = Mob(328, -100, mob2_img)
+mob23 = Mob(428, -100, mob2_img)
+mob24 = Mob(528, -100, mob2_img)
+mob25 = Mob(628, -100, mob2_img)
+mob26 = Mob(728, -100, mob2_img)
 
 
 
@@ -231,10 +288,12 @@ mobs = pygame.sprite.Group()
 mobs.add(mob1, mob2, mob3, mob4, mob5)
 
 bombs = pygame.sprite.Group()
+mobs.add(mob20, mob21, mob22, mob23, mob24, mob25, mob26)
 
 
 
 fleet = Fleet(mobs)
+fleet2 = Fleet2(mobs)
 
 
 # set stage
