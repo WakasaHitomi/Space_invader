@@ -52,6 +52,10 @@ EW = pygame.mixer.Sound('images/squish.ogg')
 SPLAT = pygame.mixer.Sound('images/splat.ogg')
 
 
+L1_MUSIC = pygame.mixer.Sound('images/ia_am_theme.ogg')
+START_MUSIC = pygame.mixer.Sound('images/ranma.ogg')
+END_MUSIC = pygame.mixer.Sound('images/in_lull.ogg')
+
 
 # Stages
 START = 0
@@ -309,6 +313,9 @@ def show_stats(player):
     screen.blit(score_text, [32, 32])
 
 # Game loop
+
+
+
 done = False
 
 while not done:
@@ -348,6 +355,7 @@ while not done:
         mobs.update(lasers, player)
         bombs.update()
         fleet.update()
+        L1.play()
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
@@ -360,6 +368,7 @@ while not done:
 
     if stage == START:
         show_title_screen()
+        START_MUSIC.play()
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
