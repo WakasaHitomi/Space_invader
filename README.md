@@ -3,7 +3,7 @@
               Controls
            ~~~~~~~~~~~~~~
            -  Shoot = Sapce
-           -  Move = Arrow Keys
+           -  Move = Arrow Keys(Left and Right)
            
            
         
