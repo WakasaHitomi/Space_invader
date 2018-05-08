@@ -56,7 +56,7 @@ L1_MUSIC = pygame.mixer.Sound('images/ia_am_theme.ogg')
 START_MUSIC = pygame.mixer.Sound('images/ranma.ogg')
 END_MUSIC = pygame.mixer.Sound('images/in_lull.ogg')
 
-
+L1_MUSIC.play(-1)
 # Stages
 START = 0
 PLAYING = 1
@@ -270,7 +270,24 @@ mob2 = Mob(228, 64, mob_img)
 mob3 = Mob(328, 64, mob_img)
 mob4 = Mob(428, 64, mob_img)
 mob5 = Mob(528, 64, mob_img)
+mob6 = Mob(128, -64, mob_img)
+mob7 = Mob(228, -64, mob_img)
+mob8 = Mob(328, -64, mob_img)
+mob9 = Mob(428, -64, mob_img)
+mob10 = Mob(528, -64, mob_img)
+mob11 = Mob(128, 164, mob2_img)
+mob12 = Mob(228, 164, mob2_img)
+mob13 = Mob(328, 164, mob2_img)
+mob14 = Mob(428, 164, mob2_img)
+mob15 = Mob(528, 164, mob2_img)
+mob16 = Mob(128, 164, mob2_img)
+mob17 = Mob(228, 164, mob2_img)
+mob18 = Mob(328, 164, mob2_img)
+mob19 = Mob(428, 164, mob2_img)
+mob20 = Mob(528, 164, mob2_img)
 
+
+'''
 mob20 = Mob(128, -100, mob2_img)
 mob21 = Mob(228, -100, mob2_img)
 mob22 = Mob(328, -100, mob2_img)
@@ -278,7 +295,7 @@ mob23 = Mob(428, -100, mob2_img)
 mob24 = Mob(528, -100, mob2_img)
 mob25 = Mob(628, -100, mob2_img)
 mob26 = Mob(728, -100, mob2_img)
-
+'''
 
 
 # Make sprite groups
@@ -289,15 +306,15 @@ player.score = 0
 lasers = pygame.sprite.Group()
 
 mobs = pygame.sprite.Group()
-mobs.add(mob1, mob2, mob3, mob4, mob5)
+mobs.add(mob1, mob2, mob3, mob4, mob5, mob6, mob7, mob8, mob9, mob10, mob11, mob12, mob13, mob14, mob15, mob16, mob17, mob18, mob19, mob20)
 
 bombs = pygame.sprite.Group()
-mobs.add(mob20, mob21, mob22, mob23, mob24, mob25, mob26)
+'''mobs.add(mob20, mob21, mob22, mob23, mob24, mob25, mob26)'''
 
 
 
 fleet = Fleet(mobs)
-fleet2 = Fleet2(mobs)
+'''fleet2 = Fleet2(mobs)'''
 
 
 # set stage
@@ -355,7 +372,7 @@ while not done:
         mobs.update(lasers, player)
         bombs.update()
         fleet.update()
-        L1.play()
+        
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
@@ -368,7 +385,7 @@ while not done:
 
     if stage == START:
         show_title_screen()
-        START_MUSIC.play()
+        
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
