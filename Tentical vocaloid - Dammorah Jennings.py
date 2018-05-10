@@ -109,6 +109,14 @@ class Ship(pygame.sprite.Sprite):
             EXPLOSION.play()
             self.kill()
 
+        if self.rect.x < 0:
+            self.rect.x = 0
+        elif self.rect.x > 900:
+            self.rect.x = 900
+
+
+
+
 class Laser(pygame.sprite.Sprite):
 
     def __init__(self, image):
@@ -145,6 +153,8 @@ class Mob(pygame.sprite.Sprite):
         bombs.add(bomb)
         EW.play()
 
+        
+
     def update(self, laser, player):
         hit_list = pygame.sprite.spritecollide(self, lasers, True, pygame.sprite.collide_mask)
 
@@ -167,6 +177,9 @@ class Bomb(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += self.speed
+
+        if self.rect.bottom < 0:
+            self.kill()
 
         
 class Fleet:
@@ -294,7 +307,7 @@ mob22 = Mob(328, -220, mob2_img)
 mob23 = Mob(428, -220, mob2_img)
 mob24 = Mob(528, -220, mob2_img)
 mob25 = Mob(628, -220, mob2_img)
-mob26 = Mob(728, -220, mob2_img)
+
 
 
 
@@ -309,7 +322,7 @@ mobs = pygame.sprite.Group()
 mobs.add(mob1, mob2, mob3, mob4, mob5, mob6, mob7, mob8, mob9, mob10, mob11, mob12, mob13, mob14, mob15, mob16, mob17, mob18, mob19, mob20)
 
 bombs = pygame.sprite.Group()
-mobs.add(mob20, mob21, mob22, mob23, mob24, mob25, mob26)
+mobs.add(mob20, mob21, mob22, mob23, mob24, mob25)
 
 
 
