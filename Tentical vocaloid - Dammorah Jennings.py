@@ -42,6 +42,8 @@ laser_img = pygame.image.load('images/miku_bullets-1.png')
 mob_img = pygame.image.load('images/squid-1.png')
 bomb_img = pygame.image.load('images/tenticle-1.png')
 mob2_img = pygame.image.load('images/octo-1.png')
+bg_image = pygame.image.load('images/bg-1.png')
+
 
 
 
@@ -111,8 +113,8 @@ class Ship(pygame.sprite.Sprite):
 
         if self.rect.x < 0:
             self.rect.x = 0
-        elif self.rect.x > 900:
-            self.rect.x = 900
+        elif self.rect.x > 910:
+            self.rect.x = 910
 
 
 
@@ -273,8 +275,10 @@ class Fleet2:
         if bomber != None:
             bomber.drop_bomb()
 
-    
+screen.blit(bg_image,(0, 0))
+
 # Make game objects
+
 
 ship = Ship(384, 536, ship_img)
 
@@ -389,6 +393,7 @@ while not done:
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
+       
     screen.fill(BLACK)
     lasers.draw(screen)
     player.draw(screen)
@@ -401,6 +406,7 @@ while not done:
         
     
     # Update screen (Actually draw the picture in the window.)
+'''screen.blit(bg_image,(0, 0))'''
     pygame.display.flip()
 
 
