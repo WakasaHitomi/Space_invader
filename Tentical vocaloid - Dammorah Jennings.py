@@ -10,7 +10,7 @@ pygame.init()
 WIDTH = 1000
 HEIGHT = 800
 SIZE = (WIDTH, HEIGHT)
-TITLE = "Neko War"
+TITLE = "Tentical Tactics"
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
 
@@ -32,7 +32,7 @@ PURPLE = (99, 45, 226)
 # Fonts
 FONT_SM = pygame.font.Font(None, 24)
 FONT_MD = pygame.font.Font(None, 32)
-FONT_LG = pygame.font.Font(None, 64)
+FONT_LG = pygame.font.Font('images/athena_of_the_ocean/Athena.ttf', 96)
 FONT_XL = pygame.font.Font('images/teenage_fantasy_romance_novel/TEENAGEROMANCENOVEL.ttf', 96)
 
 # Images
@@ -339,8 +339,10 @@ stage = START
 
 #Game Helper functions
 def show_title_screen():
-    title_text = FONT_XL.render("Neko War!!!", 1, WHITE)
-    screen.blit(title_text, [128, 204])
+    screen.blit(bg_image,(0, 0))
+    title_text = FONT_LG.render("Tentical Tactics!!!", 1, WHITE)
+    screen.blit(title_text, [428, 204])
+    
 
 def show_stats(player):
     score_text = FONT_MD.render(str(player.score), 1, WHITE)
@@ -354,6 +356,7 @@ done = False
 
 while not done:
     # Event processing (React to key presses, mouse clicks, etc.)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -384,6 +387,7 @@ while not done:
 
     # Game logic (Check for collisions, update points, etc.)
     if stage == PLAYING:
+        
         player.update(bombs)
         lasers.update()   
         mobs.update(lasers, player)
@@ -394,7 +398,7 @@ while not done:
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
        
-    screen.fill(BLACK)
+    screen.blit(bg_image,(0, 0)) 
     lasers.draw(screen)
     player.draw(screen)
     bombs.draw(screen)
@@ -406,7 +410,7 @@ while not done:
         
     
     # Update screen (Actually draw the picture in the window.)
-'''screen.blit(bg_image,(0, 0))'''
+
     pygame.display.flip()
 
 
