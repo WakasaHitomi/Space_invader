@@ -32,7 +32,7 @@ PURPLE = (99, 45, 226)
 # Fonts
 FONT_SM = pygame.font.Font(None, 24)
 FONT_MD = pygame.font.Font(None, 32)
-FONT_LG = pygame.font.Font('images/athena_of_the_ocean/Athena.ttf', 96)
+FONT_LG = pygame.font.Font('images/athena_of_the_ocean/Athena.ttf', 180)
 FONT_XL = pygame.font.Font('images/teenage_fantasy_romance_novel/TEENAGEROMANCENOVEL.ttf', 96)
 
 # Images
@@ -43,6 +43,8 @@ mob_img = pygame.image.load('images/squid-1.png')
 bomb_img = pygame.image.load('images/tenticle-1.png')
 mob2_img = pygame.image.load('images/octo-1.png')
 bg_image = pygame.image.load('images/bg-1.png')
+start_img = pygame.image.load('images/bg_start-1.png')
+life_bub = pygame.image.load('images/bubble_life-1.png')
 
 
 
@@ -339,9 +341,9 @@ stage = START
 
 #Game Helper functions
 def show_title_screen():
-    screen.blit(bg_image,(0, 0))
+    screen.blit(start_img,(0, 0))
     title_text = FONT_LG.render("Tentical Tactics!!!", 1, WHITE)
-    screen.blit(title_text, [428, 204])
+    screen.blit(title_text, [228, 204])
     
 
 def show_stats(player):
