@@ -104,6 +104,9 @@ class Ship(pygame.sprite.Sprite):
             SPLAT.play()
             self.shield -= 1
 
+            #if self.sheild == 5:screen.blit(life_bub(0, 650))screen.blit(life_bub(171, 650))screen.blit(life_bub(342, 650))screen.blit(life_bub(513, 650))screen.blit(life_bub(684, 650))
+
+
         hit_list = pygame.sprite.spritecollide(self, mobs, False)
 
         if len(hit_list) > 0:
@@ -242,6 +245,8 @@ class Fleet2:
         self.speed = 3
         self.bomb_rate = 60
 
+        self.sheild = 3
+
     def move(self):
         reverse = False
         
@@ -270,8 +275,14 @@ class Fleet2:
         else:
             return None
     
-    def update(self):
+    def update(self, Lasers):
         self.move()
+    
+        hit_list = pygame.sprite.spritecollide(self, Lasers, True, pygame.sprite.collide_mask)
+
+        for hit in hit_list:
+            self.shield -= 1
+
 
         bomber = self.choose_bomber()
         if bomber != None:
