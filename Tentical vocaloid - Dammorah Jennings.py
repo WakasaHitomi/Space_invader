@@ -38,13 +38,25 @@ FONT_XL = pygame.font.Font('images/teenage_fantasy_romance_novel/TEENAGEROMANCEN
 # Images
 
 ship_img = pygame.image.load('images/player_ship-1.png')
-laser_img = pygame.image.load('images/miku_bullets-1.png')
+laser_img = pygame.image.load('images/bullet-1.png')
 mob_img = pygame.image.load('images/squid-1.png')
 bomb_img = pygame.image.load('images/tenticle-1.png')
 mob2_img = pygame.image.load('images/octo-1.png')
 bg_image = pygame.image.load('images/bg-1.png')
 start_img = pygame.image.load('images/bg_start-1.png')
 life_bub = pygame.image.load('images/bubble_life-1.png')
+
+
+
+bub1 = pygame.image.load('images/bouncybubble-1.png')
+bub2 = pygame.image.load('images/bouncybubble-2.png')
+bub3 = pygame.image.load('images/bouncybubble-3.png')
+bub4 = pygame.image.load('images/bouncybubble-4.png')
+bub5 = pygame.image.load('images/bouncybubble-5.png')
+bub6 = pygame.image.load('images/bouncybubble-6.png')
+bub7 = pygame.image.load('images/bouncybubble-7.png')
+
+bouncing = [bub1, bub2, bub3, bub4, bub5, bub6, bub7]
 
 
 
@@ -140,7 +152,7 @@ class Laser(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
-    
+ #mob 1   
 class Mob(pygame.sprite.Sprite):
     def __init__(self, x, y, image):
         super().__init__()
@@ -172,6 +184,42 @@ class Mob(pygame.sprite.Sprite):
             
 
 
+
+#mob2
+class Mob2(pygame.sprite.Sprite):
+    def __init__(self, x, y, image):
+        super().__init__()
+
+        self.image = image
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+
+
+    def drop_bomb(self):
+        bomb = Bomb2(bomb_img)
+        bomb.rect.centerx = self.rect.centerx
+        bomb.rect.centery = self.rect.bottom
+        bombs.add(bomb)
+        EW.play()
+
+        
+
+    def update(self, laser, player):
+        hit_list = pygame.sprite.spritecollide(self, lasers, True, pygame.sprite.collide_mask)
+
+        if len(hit_list) > 0:
+            EXPLOSION.play()
+            player.score += 150
+            self.kill()
+            
+
+
+
+
+#bomb1
 class Bomb(pygame.sprite.Sprite):
     
     def __init__(self, image):
@@ -188,7 +236,27 @@ class Bomb(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
+
+
+
+#bomb2
+class Bomb2(pygame.sprite.Sprite):
+    
+    def __init__(self, image):
+        super().__init__()
+
+        self.image = image
+        self.rect = self.image.get_rect()
         
+        self.speed = 5
+
+    def update(self):
+        self.rect.y += self.speed
+
+        if self.rect.bottom < 0:
+            self.kill()
+
+#fleet 1        
 class Fleet:
 
     def __init__(self, mobs):
@@ -236,7 +304,7 @@ class Fleet:
 
 
 
-
+#fleet2
 class Fleet2:
 
     def __init__(self, mobs):
@@ -323,7 +391,7 @@ mob21 = Mob(228, -220, mob2_img)
 mob22 = Mob(328, -220, mob2_img)
 mob23 = Mob(428, -220, mob2_img)
 mob24 = Mob(528, -220, mob2_img)
-mob25 = Mob(628, -220, mob2_img)
+
 
 
 
@@ -339,7 +407,7 @@ mobs = pygame.sprite.Group()
 mobs.add(mob1, mob2, mob3, mob4, mob5, mob6, mob7, mob8, mob9, mob10, mob11, mob12, mob13, mob14, mob15, mob16, mob17, mob18, mob19, mob20)
 
 bombs = pygame.sprite.Group()
-mobs.add(mob20, mob21, mob22, mob23, mob24, mob25)
+mobs.add(mob20, mob21, mob22, mob23, mob24)
 
 
 
@@ -406,7 +474,8 @@ while not done:
         mobs.update(lasers, player)
         bombs.update()
         fleet.update()
-        
+        bombs2.update()
+        fleet2.update()
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
