@@ -77,6 +77,7 @@ L1_MUSIC.play(-1)
 START = 0
 PLAYING = 1
 END = 2
+PAUSE = 3
 
 
 # Game classes
@@ -310,60 +311,61 @@ class Fleet:
 screen.blit(bg_image,(0, 0))
 
 # Make game objects
+def setup():
+    global player, mobs, bombs, fleet, ship, lasers, stage
 
+    ship = Ship(384, 536, ship_img)
 
-ship = Ship(384, 536, ship_img)
-
-mob1 = Mob(128, 64, mob_img)
-mob2 = Mob(228, 64, mob_img)
-mob3 = Mob(328, 64, mob_img)
-mob4 = Mob(428, 64, mob_img)
-mob5 = Mob(528, 64, mob_img)
-mob6 = Mob(128, -64, mob_img)
-mob7 = Mob(228, -64, mob_img)
-mob8 = Mob(328, -64, mob_img)
-mob9 = Mob(428, -64, mob_img)
-mob10 = Mob(528, -64, mob_img)
-mob11 = Mob2(128, -164, mob2_img)
-mob12 = Mob2(228, -164, mob2_img)
-mob13 = Mob2(328, -164, mob2_img)
-mob14 = Mob2(428, -164, mob2_img)
-mob15 = Mob2(528, -164, mob2_img)
-mob16 = Mob2(128, -164, mob2_img)
-mob17 = Mob2(228, -164, mob2_img)
-mob18 = Mob2(328, -164, mob2_img)
-mob19 = Mob2(428, -164, mob2_img)
-mob20 = Mob2(528, -164, mob2_img)
-
-
-
-mob20 = Mob(128, -220, mob2_img)
-mob21 = Mob(228, -220, mob2_img)
-mob22 = Mob(328, -220, mob2_img)
-mob23 = Mob(428, -220, mob2_img)
-mob24 = Mob(528, -220, mob2_img)
+    mob1 = Mob(128, 64, mob_img)
+    mob2 = Mob(228, 64, mob_img)
+    mob3 = Mob(328, 64, mob_img)
+    mob4 = Mob(428, 64, mob_img)
+    mob5 = Mob(528, 64, mob_img)
+    mob6 = Mob(128, -64, mob_img)
+    mob7 = Mob(228, -64, mob_img)
+    mob8 = Mob(328, -64, mob_img)
+    mob9 = Mob(428, -64, mob_img)
+    mob10 = Mob(528, -64, mob_img)
+    mob11 = Mob2(128, -164, mob2_img)
+    mob12 = Mob2(228, -164, mob2_img)
+    mob13 = Mob2(328, -164, mob2_img)
+    mob14 = Mob2(428, -164, mob2_img)
+    mob15 = Mob2(528, -164, mob2_img)
+    mob16 = Mob2(128, -164, mob2_img)
+    mob17 = Mob2(228, -164, mob2_img)
+    mob18 = Mob2(328, -164, mob2_img)
+    mob19 = Mob2(428, -164, mob2_img)
+    mob20 = Mob2(528, -164, mob2_img)
 
 
 
-
-
-# Make sprite groups
-player = pygame.sprite.GroupSingle()
-player.add(ship)
-player.score = 0
-
-lasers = pygame.sprite.Group()
-
-mobs = pygame.sprite.Group()
-mobs.add(mob1, mob2, mob3, mob4, mob5, mob6, mob7, mob8, mob9, mob10, mob11, mob12, mob13, mob14, mob15, mob16, mob17, mob18, mob19, mob20)
-
-bombs = pygame.sprite.Group()
-
-mobs.add(mob20, mob21, mob22, mob23, mob24)
+    mob20 = Mob(128, -220, mob2_img)
+    mob21 = Mob(228, -220, mob2_img)
+    mob22 = Mob(328, -220, mob2_img)
+    mob23 = Mob(428, -220, mob2_img)
+    mob24 = Mob(528, -220, mob2_img)
 
 
 
-fleet = Fleet(mobs)
+
+
+    # Make sprite groups
+    player = pygame.sprite.GroupSingle()
+    player.add(ship)
+    player.score = 0
+
+    lasers = pygame.sprite.Group()
+
+    mobs = pygame.sprite.Group()
+    mobs.add(mob1, mob2, mob3, mob4, mob5, mob6, mob7, mob8, mob9, mob10, mob11, mob12, mob13, mob14, mob15, mob16, mob17, mob18, mob19, mob20)
+
+    bombs = pygame.sprite.Group()
+
+    mobs.add(mob20, mob21, mob22, mob23, mob24)
+
+
+
+    fleet = Fleet(mobs)
 
 
 # set stage
@@ -382,7 +384,7 @@ def show_stats(player):
 
 # Game loop
 
-
+setup()
 
 done = False
 
@@ -414,6 +416,11 @@ while not done:
 
         if closed:
             exit()
+
+
+        elif stage == END:
+            if event.key == pygame.K_2:
+                setup()
         
 
 
