@@ -313,15 +313,11 @@ class Fleet:
             
 
 
-
-
-
-
-
-screen.blit(bg_image,(0, 0))
-
 # Make game objects
 def setup():
+    screen.blit(bg_image,(0, 0))
+
+    
     global player, mobs, bombs, fleet, ship, lasers, stage
 
     ship = Ship(384, 536, ship_img)
@@ -422,15 +418,15 @@ while not done:
 
             
     if stage == END:
-            if event.key == pygame.K_2:
+        title_text = FONT_LG.render("press r to restart or x to exit", 1, WHITE)
+        screen.blit(title_text, [228, 204])
+
+        pressed = pygame.key.get_pressed()
+
+        if pressed[pygame.K_r]:
                 setup()
                 screen.blit(start_img,(0, 0))
-                title_text = FONT_LG.render("press r to restart or x to exit", 1, WHITE)
-                screen.blit(title_text, [228, 204])
-
-
-    
-    closed = pressed[pygame.K_x]
+closed = pressed[pygame.K_x]
 
         if closed:
             exit()
