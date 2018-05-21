@@ -207,6 +207,8 @@ class Mob2(pygame.sprite.Sprite):
         self.rect.y = y
 
 
+        self.shield = 3
+
    
     def drop_bomb(self):
         bomb = Bomb(bomb_img)
@@ -220,12 +222,20 @@ class Mob2(pygame.sprite.Sprite):
     def update(self, laser, player):
         hit_list = pygame.sprite.spritecollide(self, lasers, True, pygame.sprite.collide_mask)
 
+
+        for hit in hit_list:
+            self.shield -= 1
+
+        if len(hit_list) > 0:
+            self.shield = 0
+    
         if len(hit_list) > 0:
             EXPLOSION.play()
             player.score += 150
+            
+        if self.shield == 0:
             self.kill()
-
-
+            player.score += 150
 
 
 
