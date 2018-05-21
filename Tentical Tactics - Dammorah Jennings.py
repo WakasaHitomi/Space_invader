@@ -430,7 +430,7 @@ while not done:
 
 
     
-        closed = pressed[pygame.K_x]
+    closed = pressed[pygame.K_x]
 
         if closed:
             exit()
