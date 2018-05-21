@@ -349,11 +349,11 @@ def setup():
 
 
 
-    mob20 = Mob(128, -220, mob2_img)
-    mob21 = Mob(228, -220, mob2_img)
-    mob22 = Mob(328, -220, mob2_img)
-    mob23 = Mob(428, -220, mob2_img)
-    mob24 = Mob(528, -220, mob2_img)
+    mob20 = Mob2(128, -220, mob2_img)
+    mob21 = Mob2(228, -220, mob2_img)
+    mob22 = Mob2(328, -220, mob2_img)
+    mob23 = Mob2(428, -220, mob2_img)
+    mob24 = Mob2(528, -220, mob2_img)
 
 
 
@@ -420,6 +420,14 @@ while not done:
         elif pressed[pygame.K_RIGHT]:
             ship.move_right()
 
+            
+    if stage == END:
+            if event.key == pygame.K_2:
+                setup()
+                screen.blit(start_img,(0, 0))
+                title_text = FONT_LG.render("press r to restart or x to exit", 1, WHITE)
+                screen.blit(title_text, [228, 204])
+
 
     
         closed = pressed[pygame.K_x]
@@ -428,9 +436,6 @@ while not done:
             exit()
 
 
-        elif stage == END:
-            if event.key == pygame.K_2:
-                setup()
         
 
 
@@ -450,7 +455,7 @@ while not done:
         if len(mobs) == 0:
             stage = END        
 
-
+        
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
        
