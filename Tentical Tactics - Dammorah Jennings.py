@@ -55,9 +55,42 @@ bub4 = pygame.image.load('images/bouncybubble-4.png')
 bub5 = pygame.image.load('images/bouncybubble-5.png')
 bub6 = pygame.image.load('images/bouncybubble-6.png')
 bub7 = pygame.image.load('images/bouncybubble-7.png')
+bub8 = pygame.image.load('images/bouncybubble-1.png')
 
-bouncing = [bub1, bub2, bub3, bub4, bub5, bub6, bub7]
+bouncing = [bub1, bub2, bub3, bub4, bub5, bub6, bub7, bub8]
 
+
+b_loc = [0, 715, 1, 1]
+b_loc2 = [50, 715, 1, 1]
+b_loc3 = [100, 715, 1, 1]
+b_loc4 = [150, 715, 1, 1]
+b_loc5 = [200, 715, 1, 1]
+
+
+def laifu(frame):
+    loc = b_loc
+
+    screen.blit(bouncing[frame], loc)
+
+def laifu2(frame):
+    loc = b_loc2
+
+    screen.blit(bouncing[frame], loc)
+
+def laifu3(frame):
+    loc = b_loc3
+
+    screen.blit(bouncing[frame], loc)
+
+def laifu4(frame):
+    loc = b_loc4
+
+    screen.blit(bouncing[frame], loc)
+
+def laifu5(frame):
+    loc = b_loc5
+
+    screen.blit(bouncing[frame], loc)
 
 
 
@@ -351,8 +384,7 @@ def setup():
     mob23 = Mob2(428, -220, mob2_img)
     mob24 = Mob2(528, -220, mob2_img)
 
-
-
+    
 
 
     # Make sprite groups
@@ -390,6 +422,9 @@ def show_stats(player):
 
 # Game loop
 
+
+tick = 0
+frame = 0
 setup()
 
 done = False
@@ -426,10 +461,17 @@ while not done:
         if pressed[pygame.K_r]:
                 setup()
                 screen.blit(start_img,(0, 0))
-closed = pressed[pygame.K_x]
+
+        closed = pressed[pygame.K_x]
 
         if closed:
             exit()
+
+    pressed = pygame.key.get_pressed()
+    closed = pressed[pygame.K_x]
+
+    if closed:
+        exit()
 
 
         
@@ -451,7 +493,11 @@ closed = pressed[pygame.K_x]
         if len(mobs) == 0:
             stage = END        
 
-        
+    tick += 1
+    if tick%20 == 0:
+        frame += 1
+        if frame > 8:
+            frame = 0
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
        
@@ -461,6 +507,11 @@ closed = pressed[pygame.K_x]
     bombs.draw(screen)
     mobs.draw(screen)
     show_stats(player)
+    laifu(frame)
+    laifu2(frame)
+    laifu3(frame)
+    laifu4(frame)
+    laifu5(frame)
 
     if stage == START:
         show_title_screen()
