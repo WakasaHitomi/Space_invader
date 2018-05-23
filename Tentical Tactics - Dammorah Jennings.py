@@ -350,6 +350,8 @@ class Fleet:
 def setup():
     screen.blit(bg_image,(0, 0))
 
+    ticks = 0
+
     
     global player, mobs, bombs, fleet, ship, lasers, stage
 
@@ -494,7 +496,7 @@ while not done:
             stage = END        
 
     tick += 1
-    if tick%20 == 0:
+    if tick%10 == 0:
         frame += 1
         if frame > 8:
             frame = 0
