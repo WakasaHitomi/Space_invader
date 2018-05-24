@@ -30,8 +30,8 @@ PINK = (255, 186, 233)
 PURPLE = (99, 45, 226)
 
 # Fonts
-FONT_SM = pygame.font.Font(None, 24)
-FONT_MD = pygame.font.Font(None, 32)
+FONT_SM = pygame.font.Font('images/athena_of_the_ocean/Athena.ttf', 24)
+FONT_MD = pygame.font.Font('images/athena_of_the_ocean/Athena.ttf', 32)
 FONT_LG = pygame.font.Font('images/athena_of_the_ocean/Athena.ttf', 180)
 FONT_XL = pygame.font.Font('images/teenage_fantasy_romance_novel/TEENAGEROMANCENOVEL.ttf', 96)
 
@@ -60,37 +60,6 @@ bub8 = pygame.image.load('images/bouncybubble-1.png')
 bouncing = [bub1, bub2, bub3, bub4, bub5, bub6, bub7, bub8]
 
 
-b_loc = [0, 715, 1, 1]
-b_loc2 = [50, 715, 1, 1]
-b_loc3 = [100, 715, 1, 1]
-b_loc4 = [150, 715, 1, 1]
-b_loc5 = [200, 715, 1, 1]
-
-
-def laifu(frame):
-    loc = b_loc
-
-    screen.blit(bouncing[frame], loc)
-
-def laifu2(frame):
-    loc = b_loc2
-
-    screen.blit(bouncing[frame], loc)
-
-def laifu3(frame):
-    loc = b_loc3
-
-    screen.blit(bouncing[frame], loc)
-
-def laifu4(frame):
-    loc = b_loc4
-
-    screen.blit(bouncing[frame], loc)
-
-def laifu5(frame):
-    loc = b_loc5
-
-    screen.blit(bouncing[frame], loc)
 
 
 
@@ -117,6 +86,16 @@ PAUSE = 3
 class Ship(pygame.sprite.Sprite):
     def __init__(self, x, y, image):
         super().__init__()
+
+
+        b_loc = (0, 715)
+        b_loc2 = (50, 715)
+        b_loc3 = (100, 715)
+        b_loc4 = (150, 715)
+        b_loc5 = (200, 715)
+
+
+
         
         self.image = image
         self.rect = self.image.get_rect()
@@ -126,6 +105,95 @@ class Ship(pygame.sprite.Sprite):
         self.speed = 3
         self.shield = 5
 
+
+
+
+        if self.shield == 5:
+            def laifu(frame):
+                loc = b_loc
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu2(frame):
+                loc = b_loc2
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu3(frame):
+                loc = b_loc3
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu4(frame):
+                loc = b_loc4
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu5(frame):
+                loc = b_loc5
+
+                screen.blit(bouncing[frame], loc)
+
+
+
+        if self.shield == 4:
+            def laifu(frame):
+                loc = b_loc
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu2(frame):
+                loc = b_loc2
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu3(frame):
+                loc = b_loc3
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu4(frame):
+                loc = b_loc4
+
+                screen.blit(bouncing[frame], loc)
+
+
+        if self.shield == 3:
+            def laifu(frame):
+                loc = b_loc
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu2(frame):
+                loc = b_loc2
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu3(frame):
+                loc = b_loc3
+
+                screen.blit(bouncing[frame], loc)
+
+
+        if self.shield == 2:
+            def laifu(frame):
+                loc = b_loc
+
+                screen.blit(bouncing[frame], loc)
+
+            def laifu2(frame):
+                loc = b_loc2
+
+                screen.blit(bouncing[frame], loc)
+                
+
+        if self.shield == 1:
+            def laifu(frame):
+                loc = b_loc
+
+                screen.blit(bouncing[frame], loc)
+
+           
     def move_left(self):
         self.rect.x -= self.speed
 
@@ -509,11 +577,8 @@ while not done:
     bombs.draw(screen)
     mobs.draw(screen)
     show_stats(player)
-    laifu(frame)
-    laifu2(frame)
-    laifu3(frame)
-    laifu4(frame)
-    laifu5(frame)
+
+    
 
     if stage == START:
         show_title_screen()
