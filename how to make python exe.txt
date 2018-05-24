@@ -1,0 +1,25 @@
+Open gitbash console in game directory, then type
+
+	pyi-makespec your_game.py
+
+Edit the your_game.spec file so that the 'datas' line reads
+
+        datas=[("assets", "assets")],
+
+You can also edit the console and name section
+
+	console=False
+	name="Space War"
+
+(This assumes all of your game assets (sounds, images, fonts, etc.) are
+ in an 'assets' folder.)
+
+Now tell pyinstaller to use your spec file to create the exe. In the 
+console, type
+
+	pyinstaller --onefile your_game.spec
+
+* For some reason .exe files don't like it when your font is None. You
+  will need to include an actual font file for each font used in your
+  game.
+
