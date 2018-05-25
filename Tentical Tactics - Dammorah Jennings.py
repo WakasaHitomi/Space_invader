@@ -490,6 +490,20 @@ def show_stats(player):
     score_text = FONT_MD.render(str(player.score), 1, WHITE)
     screen.blit(score_text, [32, 32])
 
+
+def show_end():
+    
+    title_text = FONT_LG.render("press 'r' to restart", 1, WHITE)
+    screen.blit(title_text, [228, 204])
+
+    title_text = FONT_LG.render("press 'x' to exit", 1, WHITE)
+    screen.blit(title_text, [228, 284])
+
+
+    title_text = FONT_LG.render("press 's' for score", 1, WHITE)
+    screen.blit(title_text, [228, 344])
+
+    
 # Game loop
 
 
@@ -523,9 +537,7 @@ while not done:
 
             
     if stage == END:
-        title_text = FONT_LG.render("press r to restart or x to exit", 1, WHITE)
-        screen.blit(title_text, [228, 204])
-
+        show_end() 
         pressed = pygame.key.get_pressed()
 
         if pressed[pygame.K_r]:
