@@ -106,9 +106,7 @@ class Ship(pygame.sprite.Sprite):
         self.shield = 5
 
 
-
-
-        if self.shield == 5:
+'''        if self.shield == 5:
             def laifu(frame):
                 loc = b_loc
 
@@ -192,7 +190,7 @@ class Ship(pygame.sprite.Sprite):
                 loc = b_loc
 
                 screen.blit(bouncing[frame], loc)
-
+'''
            
     def move_left(self):
         self.rect.x -= self.speed
@@ -503,6 +501,12 @@ def show_end():
     title_text = FONT_LG.render("press 's' for score", 1, WHITE)
     screen.blit(title_text, [228, 344])
 
+def display_stats(score):
+
+    title_text = FONT_LG.render("SCORE: " + str(score) + " ", 1, WHITE)
+    screen.blit(title_text, [228, 204])
+
+
     
 # Game loop
 
@@ -589,6 +593,8 @@ while not done:
     bombs.draw(screen)
     mobs.draw(screen)
     show_stats(player)
+    display_stats(score)
+
 
     
 
